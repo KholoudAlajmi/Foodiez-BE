@@ -6,7 +6,7 @@ const CategorySchema = new Schema(
         recpies: { type: Array },
         image: { type: String },
         creator: { type: String },
-        num: { type: String }
+        num: { type: Number }
     }
 );
 

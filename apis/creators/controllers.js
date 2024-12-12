@@ -1,30 +1,71 @@
-const accounts = require("../../accounts");
+const CreatorsModel = require("../../models/Creators");
 
+exports.getAllCreators = async (req, res) => {
+  const allCreators = await CreatorsModel.find();
 
-function fetchesAllAccounts(){
-  return accounts;
+  res.json(allCreators);
 }
 
 
-exports.getAccounts =  (req, res) => {
-  console.log(req.id)
-    const accounts = fetchesAllAccounts(); 
-    res.json(accounts);
-  }
+exports.createCreator = async (req, res) => {
+  const { name, recpies, image, followers } = req.body;
+
+  const newCreator = await CreatorsModel.create({ name, recpies, image, followers });
+
+  res.json(newCreator);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function fetchesAllAccounts(){
+//   return accounts;
+// }
+
+
+// exports.getAccounts =  (req, res) => {
+//   console.log(req.id)
+//     const accounts = fetchesAllAccounts(); 
+//     res.json(accounts);
+//   }
 
 
   
-function createsANewaccount (newAccountData) {
-    console.log("Creating new account", newAccountData)
-    const newId = accounts.length + 1
-    const newAccount = Object.assign({ id: newId }, newAccountData)
-    console.log("My new account is: ", newAccount)
-    return newAccount
-}
- exports.createANewaccount= (req, res) => {
-    const newaccount = createsANewaccount(req.body);
-    res.status(201).json(newaccount);
-  }
+// function createsANewaccount (newAccountData) {
+//     console.log("Creating new account", newAccountData)
+//     const newId = accounts.length + 1
+//     const newAccount = Object.assign({ id: newId }, newAccountData)
+//     console.log("My new account is: ", newAccount)
+//     return newAccount
+// }
+//  exports.createANewaccount= (req, res) => {
+//     const newaccount = createsANewaccount(req.body);
+//     res.status(201).json(newaccount);
+//   }
   
 
 
@@ -48,19 +89,19 @@ function createsANewaccount (newAccountData) {
 
 
 
-exports.getAccount =(req, res) => {
-  const username = req.params.username;
-  const img = req.query.img;
-  let result = accounts
-  if (username) {
-      result = accounts.find((account) => account.username==username)
-  }
-  if(img) {
-    result = accounts.find((account) => account.img==img)
-  }
-  console.log(result)
-  res.json(result)
-}
+// exports.getAccount =(req, res) => {
+//   const username = req.params.username;
+//   const img = req.query.img;
+//   let result = accounts
+//   if (username) {
+//       result = accounts.find((account) => account.username==username)
+//   }
+//   if(img) {
+//     result = accounts.find((account) => account.img==img)
+//   }
+//   console.log(result)
+//   res.json(result)
+// }
 
 
 

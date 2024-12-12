@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {getReciepies, updatesAnReciepies, deleteReciepies,createANewReciepies, getReciepies } = require("./controllers"); 
+const { getAllRecpies, createRecpie, updateRecpie, deleteRecpie } = require("./controllers");
 
-router.get("/",  getReciepies);
-router.get('/:username',  getReciepies);
-router.post("/",  createANewReciepies);
-router.delete("/:ReciepieId",  deleteReciepies);
-router.put("/:ReciepieId",  updatesAnReciepies);
+router.get("/", getAllRecpies);
+router.post("/", createRecpie);
+router.delete("/:Id", deleteRecpie);
+router.put("/:Id", updateRecpie);
 
 module.exports = router;
 

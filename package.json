@@ -12,13 +12,10 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-<<<<<<< HEAD
     "mongodb": "^6.11.0",
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.8.4",
-    "start": "^5.1.0"
-=======
+    "start": "^5.1.0",
     "pull": "^2.1.1"
->>>>>>> origin/KH
   }
 }

@@ -4,14 +4,16 @@ const app = express();
 
 const connectDb = require('./database');
 
-const Categories = require('./Categories')
+const CategoriesRoute = require('./apis/categories/routes')
+const ReciepiesRoute = require('./apis/reciepies/routes')
+const CreatorsRoute = require('./apis/creators/routes')
+
 app.use(express.json())
 
+app.use("/categories", CategoriesRoute);
+app.use("/reciepies", ReciepiesRoute);
+app.use("/creators", CreatorsRoute);
 
-app.post('/', async (req, res) => {
-  const newCategory = await Categories.create(req.body);
-  res.status(201).json(newCategory)
-})
 
 connectDb();
 

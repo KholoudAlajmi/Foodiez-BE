@@ -8,7 +8,7 @@ const RecipeSchema = new Schema(
         instructions: { type: String },
         creator: { type: String },
         category: { type: String },
-        rate: { type: parseInt(String) }
+        rate: { type: Number }
     }
 );
 
