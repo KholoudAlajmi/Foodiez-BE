@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { createANewIngredient, getIngredients, deleteIngredient1 } = require("./controllers");
+const { getAllIngredients, createIngredient, deleteIngredient } = require("./conrollers");
 
-router.get("/", getIngredients);
-router.post("/", createANewIngredient);
-router.delete("/:accountId", deleteIngredient1);
+
+router.get('/', getAllIngredients);
+router.post("/", createIngredient);
+router.delete('/:Id', deleteIngredient);
 
 
 module.exports = router;

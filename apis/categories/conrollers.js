@@ -2,16 +2,16 @@ const CategoriesModel = require("../../models/Categories");
 
 
 exports.getAllCategories = async (req, res) => {
-  const allCategories = await CategoriesModel.find();
+  const allCategories = await CategoriesModel.find().populate('recpies');
 
-  res.json(allCategories);
+  res.status(200).json(allCategories);
 }
 
 exports.createCategory = async (req, res) => {
   const { name, recpies, image, creator, num } = req.body;
   const newCategory = await CategoriesModel.create({ name, recpies, image, creator, num });
 
-  res.json(newCategory);
+  res.status(201).json(newCategory);
 }
 
 exports.deleteCategory = async (req, res) => {
@@ -20,6 +20,16 @@ exports.deleteCategory = async (req, res) => {
   await CategoriesModel.findByIdAndDelete(Id);
   res.json(this.deleteCategory);
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

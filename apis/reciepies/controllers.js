@@ -1,7 +1,8 @@
 const RecpiesModel = require("../../models/Recpies");
+const CategoriesModel = require("../../models/Categories")
 
 exports.getAllRecpies = async (req, res) => {
-  const allRecpies = await RecpiesModel.find();
+  const allRecpies = await RecpiesModel.find().populate('category');
 
   res.json(allRecpies);
 }
@@ -18,6 +19,10 @@ exports.createRecpie = async (req, res) => {
     category,
     rate 
   });
+
+  const categoryy = await CategoriesModel.findById(categoryy);
+  categoryy.recpies.push(newRecpie._id);
+  await categoryy.save();
 
   res.json(newRecpie);
 }
@@ -42,6 +47,11 @@ exports.deleteRecpie = async (req, res) => {
 
   const { Id } = req.params;
   await RecpiesModel.findByIdAndDelete(Id);
+
+  const category = await CategoriesModel.findById(category);
+  category.recpies.pull(Id);
+  await category.save();
+
   res.json(this.deleteRecpie);
 }
 
