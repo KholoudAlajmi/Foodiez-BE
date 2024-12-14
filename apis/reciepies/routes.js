@@ -1,12 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const {getReciepies, updatesAnReciepies, deleteReciepies,createANewReciepies, getReciepies } = require("./controllers"); 
+const {getRecipes, createANewrecipe,
+    updatesAnRecipe,deleteRecipeController,
+    getRecipe,reciepeEnroll,
+    reciepesGet} = require("./controllers"); 
+const upload = require("../../middleware/multer");
 
-router.get("/",  getReciepies);
-router.get('/:username',  getReciepies);
-router.post("/",  createANewReciepies);
-router.delete("/:ReciepieId",  deleteReciepies);
-router.put("/:ReciepieId",  updatesAnReciepies);
+router.get("",  getRecipes); 
+router.get('/:name',  getRecipe);
+router.post("/",  createANewrecipe);
+router.delete("/:recipeId/",  deleteRecipeController); 
+router.put("/:recipeId",  updatesAnRecipe); 
+
+router.post('/:recipeId/:ingredientId', reciepeEnroll); 
+router.get('/:recipeId/:ingredientId',  reciepesGet);
+
+// User Create
+router.post('/', upload.single('image'), userCreate);
+// User Update
+router.put('/:postId', upload.single('image'), userUpdate);
 
 module.exports = router;
 

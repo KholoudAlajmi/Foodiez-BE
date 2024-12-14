@@ -1,14 +1,29 @@
 const { model, Schema } = require('mongoose');
-const Categories = require('../Categories');
+const mongooseSlugPlugin = require('mongoose-slug-plugin');
 
-const CreatorsSchema = new Schema(
+
+const CreatorsSchema = new Schema({
+  slug: String,
+  name: String,
+  image: String,
+  reciepes: [
     {
-        name: { type: String },
-        recpies: { type: Array },
-        image: { type: String },
-        followers: { type: String }
-    }
-);
-
-
+      type: Schema.Types.ObjectId,
+      ref: 'Reciepe', 
+    },
+  ],
+    ingredients: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Ingredient', 
+      },
+    ],
+      categories: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Category', 
+        },
+  ],
+});
+CreatorsSchema.plugin(mongooseSlugPlugin, { tmpl: '<%=creator%>' });
 module.exports = model('Creators', CreatorsSchema);

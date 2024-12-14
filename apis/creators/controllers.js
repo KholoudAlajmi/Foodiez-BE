@@ -1,67 +1,58 @@
-const accounts = require("../../accounts");
+const Creators = require("../../models/Creators");
 
 
-function fetchesAllAccounts(){
-  return accounts;
-}
-
-
-exports.getAccounts =  (req, res) => {
-  console.log(req.id)
-    const accounts = fetchesAllAccounts(); 
-    res.json(accounts);
+exports.getCreators =  async (req, res, next) => {
+  try {
+    const creators = await Creators.find(req.body, '-createdAt -updatedAt').populate(
+      'reciepes',
+      'categories',
+      'ingredients'
+    );
+    res.json(creators);
+  } catch (error) {
+    next(error);
   }
+};
 
 
-  
-function createsANewaccount (newAccountData) {
-    console.log("Creating new account", newAccountData)
-    const newId = accounts.length + 1
-    const newAccount = Object.assign({ id: newId }, newAccountData)
-    console.log("My new account is: ", newAccount)
-    return newAccount
-}
- exports.createANewaccount= (req, res) => {
-    const newaccount = createsANewaccount(req.body);
-    res.status(201).json(newaccount);
+
+ exports.createANewCreator= async (req,res) => {
+  try{
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    }    
+    const newCreator = await Creators.create(req.body)
+    res.json(newCreator)
+  }catch(e){
+    console.log(e.message);
   }
-  
-
-
-   
-
-//   const updatesAnExistingAccount = (currentAccount, newData) => {
-//     const myUpdatedAccount = Object.assign(currentAccount, newData)
-//     return myUpdatedAccount
-// }
-
-// exports.updatesAnAccount =(req, res) => {
-//   const { accountId } = req.params;
-//   const foundAccount = accounts.find((x) => x.id == accountId); //x is the current record
-//   if (foundAccount) {
-//     const updatedAccount = updatesAnExistingAccount(foundAccount,req.body);
-//     res.status(200).json(updatedAccount); //status is range of number 
-//   } else {
-//     res.status(404).json({ message: "Account not found" });
-//   }
-// }
-
-
-
-exports.getAccount =(req, res) => {
-  const username = req.params.username;
-  const img = req.query.img;
-  let result = accounts
-  if (username) {
-      result = accounts.find((account) => account.username==username)
-  }
-  if(img) {
-    result = accounts.find((account) => account.img==img)
-  }
-  console.log(result)
-  res.json(result)
 }
 
 
 
 
+
+exports.updateCreatorController = async (req, res) => {
+  const { creatorId } = req.params
+  const foundCreator = await Creators.findById(creatorId)
+ try{ 
+      foundCreator = await foundCreator.updateOne(req.body)
+      res.json(foundCreator);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+
+
+exports.getCreatorById = async (req, res, next) => {
+  try {
+    const creator = await Creators.findById(req.params.id).select("-password");
+    if (!creator) {
+      return res.status(404).json({ message: "creator not found" });
+    }
+    res.status(200).json(creator);
+  } catch (err) {
+    next(err);
+  }
+};
