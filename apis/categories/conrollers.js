@@ -8,10 +8,10 @@ exports.getAllCategories = async (req, res) => {
 }
 
 exports.createCategory = async (req, res) => {
-  const { name, recpies, image, creator, num } = req.body;
-  const newCategory = await CategoriesModel.create({ name, recpies, image, creator, num });
+  const category = new CategoriesModel(req.body);
+  const savedCategory = category.save();
 
-  res.status(201).json(newCategory);
+  res.status(201).json(savedCategory);
 }
 
 exports.deleteCategory = async (req, res) => {
@@ -22,7 +22,11 @@ exports.deleteCategory = async (req, res) => {
 }
 
 
-
+exports.addRecipeToCategory = async (req, res) => {
+  const { categoryId, recId } = req.params;
+  const category = await CategoriesModel.findById(categoryId).populate('recpies');
+  const updatedCategory = await category.updateOne({ $push: { recpies: recId } })
+}
 
 
 

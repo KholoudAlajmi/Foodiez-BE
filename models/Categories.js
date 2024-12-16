@@ -5,7 +5,6 @@ const CategorySchema = new Schema(
         name: { type: String },
         recpies: [{ type: Schema.Types.ObjectId, ref: "Recpies" }],
         image: { type: String },
-        creator: { type: String },
         num: { type: Number }
     }
 );

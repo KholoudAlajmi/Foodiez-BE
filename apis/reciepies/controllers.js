@@ -2,45 +2,27 @@ const RecpiesModel = require("../../models/Recpies");
 const CategoriesModel = require("../../models/Categories")
 
 exports.getAllRecpies = async (req, res) => {
-  const allRecpies = await RecpiesModel.find().populate('category');
+  const allRecpies = await RecpiesModel.find().populate('category').populate('ingredients');
 
-  res.json(allRecpies);
+  res.status(200).json(allRecpies);
 }
 
 exports.createRecpie = async (req, res) => {
-  const { name, ingredients, image, instructions, creator, category, rate } = req.body;
-  const newRecpie = await RecpiesModel.create(
-    { 
-      name,
-    ingredients,
-    image,
-    instructions,
-    creator,
-    category,
-    rate 
-  });
+  const recpie  = new RecpiesModel(req.body) ;
+  const newRecpie = await recpie.save();
 
   const categoryy = await CategoriesModel.findById(categoryy);
   categoryy.recpies.push(newRecpie._id);
   await categoryy.save();
 
-  res.json(newRecpie);
+  res.status(201).json(newRecpie);
 }
 
 exports.updateRecpie = async (req, res) => {
   const {Id} = req.params;
-  const updatedReciepie = await RecpiesModel.findByIdAndUpdate(
-    Id, 
-    {
-      name,
-    ingredients,
-    image,
-    instructions,
-    creator,
-    category,
-    rate},
-  {new: true});
-  res.json(updatedReciepie);
+  const recipe = await RecpiesModel.findById(Id);
+  const updatedReciepie = await recipe.updateOne(req.body)
+  res.status(200).json(updatedReciepie);
 }
 
 exports.deleteRecpie = async (req, res) => {
@@ -53,6 +35,15 @@ exports.deleteRecpie = async (req, res) => {
   await category.save();
 
   res.json(this.deleteRecpie);
+}
+
+
+exports.addIngrediantToRecipe = async (req, res) => {
+  const { recId , ingId} = req.params;
+  const recipe = await RecpiesModel.findById(recId);
+  const updatedReciepie = await recipe.updateOne({$push: {ingredients: ingId}});
+
+  res.status(200).json(updatedReciepie);
 }
 
 
