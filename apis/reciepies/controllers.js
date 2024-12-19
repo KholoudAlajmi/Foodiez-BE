@@ -11,9 +11,9 @@ exports.createRecpie = async (req, res) => {
   const recpie  = new RecpiesModel(req.body) ;
   const newRecpie = await recpie.save();
 
-  const categoryy = await CategoriesModel.findById(categoryy);
-  categoryy.recpies.push(newRecpie._id);
-  await categoryy.save();
+  const category = await CategoriesModel.findById(category);
+  category.recpies.push(newRecpie._id);
+  await category.save();
 
   res.status(201).json(newRecpie);
 }

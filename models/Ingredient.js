@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 
-const RecipeSchema = new Schema(
+const IngrediantsSchema = new Schema(
     {
         name: { type: String },
         recpies: [{ type: Schema.Types.ObjectId, ref: "Recpies" }],
@@ -9,4 +9,4 @@ const RecipeSchema = new Schema(
 );
 
 
-module.exports = model('Recpies', RecipeSchema);
+module.exports = model('Ingredient', IngrediantsSchema);

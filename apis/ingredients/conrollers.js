@@ -8,10 +8,11 @@ exports.getAllIngredients = async (req, res) => {
 }
 
 exports.createIngredient = async (req, res) => {
-  const { name, recpies } = req.body;
-  const newIngredient = await IngredientModel.create({ name, recpies });
 
-  res.json(newIngredient);
+  const ingredient = new IngredientModel(req.body);
+  const newIngredient = await ingredient.save();
+
+  res.status(201).json(newIngredient);
 }
 
 exports.deleteIngredient = async (req, res) => {

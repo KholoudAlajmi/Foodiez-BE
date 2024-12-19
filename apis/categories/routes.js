@@ -4,7 +4,7 @@ const { getAllCategories, createCategory, deleteCategory, addRecipeToCategory } 
 
 
 router.get('/', getAllCategories);
-router.post("/", createCategory);
+router.post("/add/category", createCategory);
 router.delete('/:Id', deleteCategory);
 router.post('/:categoryId/add/:recId', addRecipeToCategory)
 
