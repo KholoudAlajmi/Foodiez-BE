@@ -1,4 +1,4 @@
-const CreatorsModel = require("../../models/Creators");
+const CreatorsModel = require("../../models/User");
 
 exports.getAllCreators = async (req, res) => {
   const allCreators = await CreatorsModel.find();
@@ -8,11 +8,11 @@ exports.getAllCreators = async (req, res) => {
 
 
 exports.createCreator = async (req, res) => {
-  const { name, recpies, image, followers } = req.body;
+  const user = new CreatorsModel(req.body);
 
-  const newCreator = await CreatorsModel.create({ name, recpies, image, followers });
+  const newCreator = await user.save();
 
-  res.json(newCreator);
+  res.status(201).json(newCreator);
 }
 
 

@@ -1,5 +1,6 @@
 const RecpiesModel = require("../../models/Recpies");
 const CategoriesModel = require("../../models/Categories")
+const IngrediantsModel = require('../../models/Ingredient');
 
 exports.getAllRecpies = async (req, res) => {
   const allRecpies = await RecpiesModel.find().populate('category').populate('ingredients');
